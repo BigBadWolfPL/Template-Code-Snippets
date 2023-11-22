@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsywny Sidebar z Collapse Menu</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #333;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #555;
+    }
+
+    /* Nowy styl dla animacji submenu */
+    .submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .submenu li a {
+      color: #ccc;
+      padding: 8px;
+      transition: background-color 0.3s;
+    }
+
+    .submenu li a:hover {
+      background-color: #555;
+    }
+
+    .open-btn,
+    .close-btn {
+      background-color: #333;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 20px;
+      cursor: pointer;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <button class="close-btn">&times;</button>
+  <ul>
+    <li>
+      <a href="#">Strona główna</a>
+      <ul class="submenu">
+        <li><a href="#">Podstrona 1</a></li>
+        <li><a href="#">Podstrona 2</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#">O nas</a>
+      <ul class="submenu">
+        <li><a href="#">Historia</a></li>
+        <li><a href="#">Zespół</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#">Usługi</a>
+      <ul class="submenu">
+        <li><a href="#">Projekty</a></li>
+        <li><a href="#">Realizacje</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#">Kontakt</a>
+      <ul class="submenu">
+        <li><a href="#">Dane kontaktowe</a></li>
+        <li><a href="#">Formularz kontaktowy</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="content">
+  <button class="open-btn">Otwórz sidebar</button>
+  <p>Tu umieść swoją zawartość strony.</p>
+</div>
+
+<script>
+  const openBtn = document.querySelector('.open-btn');
+  const closeBtn = document.querySelector('.close-btn');
+  const sidebar = document.querySelector('.sidebar');
+
+  openBtn.addEventListener('click', () => {
+    sidebar.style.width = '250px';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    sidebar.style.width = '0';
+  });
+
+  const submenuItems = document.querySelectorAll('.submenu');
+
+  submenuItems.forEach(item => {
+    item.style.maxHeight = '0';
+    item.parentElement.querySelector('a').addEventListener('click', (e) => {
+      e.preventDefault();
+      const submenu = item;
+      const isOpen = submenu.style.maxHeight !== '0px';
+      submenu.style.maxHeight = isOpen ? '0' : submenu.scrollHeight + 'px';
+    });
+  });
+</script>
+
+</body>
+</html>
